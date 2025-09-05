@@ -16,8 +16,22 @@ Flutter (Material 3) · Provider · SharedPreferences · AnimatedList/SnackBar �
 
 ## 📦 APK (entrega)
 
-apk/app-debug.apk
-(Generado con flutter build apk --debug)
+- Descarga directa: [apk/app-debug.apk](apk/app-debug.apk)  
+  *(Generado con `flutter build apk --debug`)*
+
+### Cómo instalar el APK
+1. Copia `apk/app-debug.apk` al teléfono (o descárgalo desde GitHub).
+2. Ábrelo y permite “Instalar apps desconocidas” si lo solicita.
+
+### Estructura
+
+lib/
+  models/ task.dart
+  providers/ tasks_provider.dart, theme_provider.dart
+  screens/ home_screen.dart, add_task_screen.dart, task_detail_screen.dart
+apk/ app-debug.apk
+docs/img/ *.jpg
+pubspec.yaml
 
 ## 📹 Video (demo)
 
