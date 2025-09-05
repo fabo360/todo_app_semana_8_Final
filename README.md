@@ -31,13 +31,31 @@ flutter run -d <ID_DISPOSITIVO>
 
 ### Estructura
 
+### Estructura
+
+```text
 lib/
-  models/ task.dart
-  providers/ tasks_provider.dart, theme_provider.dart
-  screens/ home_screen.dart, add_task_screen.dart, task_detail_screen.dart
-apk/ app-debug.apk
-docs/img/ *.jpg
+  models/
+    task.dart
+  providers/
+    tasks_provider.dart
+    theme_provider.dart
+  screens/
+    home_screen.dart
+    add_task_screen.dart
+    task_detail_screen.dart
+apk/
+  app-debug.apk
+docs/
+  img/
+    home.jpg
+    add.jpg
+    detail.jpg
+    undo.jpg
+    dark.jpg
 pubspec.yaml
+README.md
+```
 
 ## 📹 Video (demo)
 
