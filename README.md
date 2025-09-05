@@ -1,16 +1,50 @@
-# todo_app
+# To-Do App (Flutter)
 
-A new Flutter project.
+Aplicación de lista de tareas con **estado global (Provider)**, **persistencia local (SharedPreferences)** y **UX con AnimatedList + SnackBar**.  
+Entrega final – Semana 8.
 
-## Getting Started
+## 🧰 Tecnologías
+Flutter (Material 3) · Provider · SharedPreferences · AnimatedList/SnackBar · Botón de tema claro/oscuro
 
-This project is a starting point for a Flutter application.
+## ✨ Funcionalidades
+- Agregar tareas (validación de título).
+- Marcar como completadas (checkbox, texto tachado).
+- Detalle con **notas** y guardar cambios.
+- Eliminar + **DESHACER**.
+- Persistencia al cerrar/abrir la app.
+- Alternar **tema claro/oscuro** desde el AppBar.
 
-A few resources to get you started if this is your first Flutter project:
+## ▶️ Ejecución
+```bash
+flutter pub get
+flutter run -d <ID_DISPOSITIVO>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+📦 APK (entrega)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+todo_app/build/app/outputs/apk/debug/app-debug.apk
+(Generado con flutter build apk --debug)
+
+## 🖼️ Capturas
+
+<table>
+  <tr>
+    <td align="center">Home</td>
+    <td align="center">Agregar</td>
+    <td align="center">Detalle</td>
+  </tr>
+  <tr>
+    <td><img src="docs/img/home.jpg" alt="Home" width="250"/></td>
+    <td><img src="docs/img/add.jpg" alt="Agregar" width="250"/></td>
+    <td><img src="docs/img/detail.jpg" alt="Detalle" width="250"/></td>
+  </tr>
+  <tr>
+    <td align="center">SnackBar + Undo</td>
+    <td align="center">Tema oscuro</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><img src="docs/img/undo.jpg" alt="Undo" width="250"/></td>
+    <td><img src="docs/img/dark.jpg" alt="Dark mode" width="250"/></td>
+    <td></td>
+  </tr>
+</table>

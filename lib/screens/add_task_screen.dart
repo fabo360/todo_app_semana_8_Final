@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../models/task.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -10,47 +9,57 @@ class AddTaskScreen extends StatefulWidget {
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
+  final _controller = TextEditingController();
 
-  void _saveTask() {
-    if (_formKey.currentState!.validate()) {
-      final task = Task(
-        title: _titleController.text.trim(),
-        description: _descriptionController.text.trim(),
-        createdAt: DateTime.now(),
-      );
-      Navigator.pop(context, task);
-    }
+  void _save() {
+    if (_formKey.currentState?.validate() != true) return;
+    Navigator.pop(context, _controller.text.trim()); // devuelve el título
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Nueva Tarea")),
+      appBar: AppBar(
+        title: const Text('Nueva tarea'),
+        actions: [
+          IconButton(
+            onPressed: _save,
+            icon: const Icon(Icons.check),
+            tooltip: 'Guardar',
+          ),
+        ],
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
               TextFormField(
-                controller: _titleController,
-                decoration: const InputDecoration(labelText: 'Título'),
-                validator: (value) =>
-                    value == null || value.isEmpty ? 'Ingrese un título' : null,
+                controller: _controller,
+                decoration: const InputDecoration(
+                  labelText: 'Título de la tarea',
+                  border: OutlineInputBorder(),
+                ),
+                autofocus: true,
+                validator: (v) =>
+                    (v == null || v.trim().isEmpty) ? 'Campo obligatorio' : null,
+                onFieldSubmitted: (_) => _save(),
               ),
-              TextFormField(
-                controller: _descriptionController,
-                decoration: const InputDecoration(labelText: 'Descripción'),
-                validator: (value) => value == null || value.isEmpty
-                    ? 'Ingrese una descripción'
-                    : null,
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _saveTask,
-                child: const Text('Guardar'),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  onPressed: _save,
+                  icon: const Icon(Icons.save),
+                  label: const Text('Guardar'),
+                ),
               ),
             ],
           ),
@@ -59,4 +68,3 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     );
   }
 }
-

@@ -1,98 +1,100 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../models/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/models/task.dart';
+import 'package:todo_app/providers/tasks_provider.dart';
 
 class TaskDetailScreen extends StatefulWidget {
   final Task task;
-  final int index;
-
-  const TaskDetailScreen({super.key, required this.task, required this.index});
+  const TaskDetailScreen({super.key, required this.task});
 
   @override
   State<TaskDetailScreen> createState() => _TaskDetailScreenState();
 }
 
 class _TaskDetailScreenState extends State<TaskDetailScreen> {
-  late TextEditingController _titleController;
-  late TextEditingController _descriptionController;
-  late Task _task;
+  late final TextEditingController _notesCtrl;
 
   @override
   void initState() {
     super.initState();
-    _task = widget.task;
-    _titleController = TextEditingController(text: _task.title);
-    _descriptionController = TextEditingController(text: _task.description);
+    _notesCtrl = TextEditingController(text: widget.task.notes);
   }
 
-  Future<void> _saveEditedTask() async {
-    final prefs = await SharedPreferences.getInstance();
-    final taskList = prefs.getStringList('tasks') ?? [];
-
-    _task = Task(
-      title: _titleController.text.trim(),
-      description: _descriptionController.text.trim(),
-      createdAt: _task.createdAt,
-      isCompleted: _task.isCompleted,
-    );
-
-    taskList[widget.index] = json.encode(_task.toMap());
-    await prefs.setStringList('tasks', taskList);
-
-    Navigator.pop(context, _task);
+  @override
+  void dispose() {
+    _notesCtrl.dispose();
+    super.dispose();
   }
 
-  Future<void> _deleteTask() async {
-    final prefs = await SharedPreferences.getInstance();
-    final taskList = prefs.getStringList('tasks') ?? [];
+  void _toggle(bool v) {
+    setState(() => widget.task.done = v);
+    context.read<TasksProvider>().updateTask(widget.task);
+  }
 
-    taskList.removeAt(widget.index);
-    await prefs.setStringList('tasks', taskList);
-
-    Navigator.pop(context);
+  void _saveAndClose() {
+    widget.task.notes = _notesCtrl.text.trim();
+    context.read<TasksProvider>().updateTask(widget.task);
+    Navigator.pop(context, true);
   }
 
   @override
   Widget build(BuildContext context) {
+    final t = widget.task;
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Detalle de Tarea")),
+      appBar: AppBar(
+        title: const Text('Detalle de tarea'),
+        leading: BackButton(onPressed: _saveAndClose),
+        actions: [
+          IconButton(onPressed: _saveAndClose, icon: const Icon(Icons.check)),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
-            Text("Fecha de creación: ${_task.createdAt.toLocal()}",
-                style: const TextStyle(fontSize: 14, color: Colors.grey)),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _titleController,
-              decoration: const InputDecoration(labelText: 'Título'),
-            ),
-            TextField(
-              controller: _descriptionController,
-              decoration: const InputDecoration(labelText: 'Descripción'),
-            ),
-            const SizedBox(height: 20),
+            Text(t.title, style: Theme.of(context).textTheme.headlineSmall),
+            const SizedBox(height: 8),
             Row(
               children: [
-                ElevatedButton(
-                  onPressed: _saveEditedTask,
-                  child: const Text('Guardar cambios'),
-                ),
-                const SizedBox(width: 10),
-                OutlinedButton(
-                  onPressed: _deleteTask,
-                  style: OutlinedButton.styleFrom(foregroundColor: Colors.red),
-                  child: const Text('Eliminar'),
+                const Text('Estado: '),
+                Chip(
+                  label: Text(t.done ? 'Completada' : 'Pendiente'),
+                  backgroundColor:
+                      t.done ? Colors.green.shade100 : Colors.orange.shade100,
                 ),
               ],
-            )
+            ),
+            const SizedBox(height: 8),
+            Text('Creada: ${t.createdAt.toLocal()}',
+                style: Theme.of(context).textTheme.bodySmall),
+            const Divider(height: 24),
+            Text('Notas', style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 8),
+            TextField(
+              controller: _notesCtrl,
+              minLines: 4,
+              maxLines: 8,
+              decoration: const InputDecoration(
+                hintText: 'Escribe aquí tus notas…',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            SwitchListTile(
+              value: t.done,
+              title: const Text('Marcar como completada'),
+              onChanged: _toggle,
+            ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _saveAndClose,
+        icon: const Icon(Icons.save),
+        label: const Text('Guardar'),
       ),
     );
   }
 }
-
 
