@@ -14,15 +14,14 @@ Flutter (Material 3) · Provider · SharedPreferences · AnimatedList/SnackBar �
 - Persistencia al cerrar/abrir la app.
 - Alternar **tema claro/oscuro** desde el AppBar.
 
-## ▶️ Ejecución
-```bash
-flutter pub get
-flutter run -d <ID_DISPOSITIVO>
+## 📦 APK (entrega)
 
-📦 APK (entrega)
-
-todo_app/build/app/outputs/apk/debug/app-debug.apk
+apk/app-debug.apk
 (Generado con flutter build apk --debug)
+
+## 📹 Video (demo)
+
+Enlace: https://drive.google.com/file/d/1Pwv8o7qOQu9iRXbJ8lrS_q2caKQzkhmx/view?usp=drive_link
 
 ## 🖼️ Capturas
 
@@ -48,3 +47,8 @@ todo_app/build/app/outputs/apk/debug/app-debug.apk
     <td></td>
   </tr>
 </table>
+
+## ▶️ Ejecución
+```bash
+flutter pub get
+flutter run -d <ID_DISPOSITIVO>
