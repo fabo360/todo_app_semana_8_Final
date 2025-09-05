@@ -21,7 +21,6 @@ flutter run -d <ID_DISPOSITIVO>
 ```
 
 ## 📦 APK (entrega)
-
 - Descarga directa: [apk/app-debug.apk](apk/app-debug.apk)  
   *(Generado con `flutter build apk --debug`)*
 
@@ -30,9 +29,6 @@ flutter run -d <ID_DISPOSITIVO>
 2. Ábrelo y permite “Instalar apps desconocidas” si lo solicita.
 
 ### Estructura
-
-### Estructura
-
 ```text
 lib/
   models/
@@ -58,11 +54,9 @@ README.md
 ```
 
 ## 📹 Video (demo)
-
 Enlace: https://drive.google.com/file/d/1Pwv8o7qOQu9iRXbJ8lrS_q2caKQzkhmx/view?usp=drive_link
 
 ## 🖼️ Capturas
-
 <table>
   <tr>
     <td align="center">Home</td>
